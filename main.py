@@ -1,7 +1,6 @@
 
 import Board
 
-
 b = Board.Board()
 b.print_game_board()
 
@@ -38,7 +37,7 @@ while game:
     user_input = input("Enter move - Black: ")
     y = int(user_input[0])
     x = int(user_input[1])
-    move = Board.Cell(x, y)
+    move = Board.Piece(x, y)
 
     isValid = False
     for i in black_available_points:
@@ -47,9 +46,7 @@ while game:
             break
 
     while not isValid:
-        user_input = "test"
-        print("Invalid input. Please try again")
-        newInput = input()
+        user_input = input("Invalid. Please try again")
         move.y = user_input[0]
         move.x = user_input[1]
         for i in black_available_points:
@@ -89,7 +86,7 @@ while game:
     user_input = input("Enter move - White: ")
     y = int(user_input[0])
     x = int(user_input[1])
-    move = Board.Cell(x, y)
+    move = Board.Piece(x, y)
 
     isValid = False
     for i in white_available_points:
