@@ -23,9 +23,15 @@ class Board:
         self.__black_score = 0
         self.__remaining = 1        # just anything but zero
 
+    def get_white_score(self):
+        return self.__white_score
+
+    def get_black_score(self):
+        return self.__black_score
+
     def print_game_board(self):
 
-        column_X = ["           ", 1, 2, 3, 4, 5, 6, 7, 8]
+        column_X = ["           ", 0, 1, 2, 3, 4, 5, 6, 7]
         column_horizontal = '='
         row_vertical = '|'
 
@@ -37,7 +43,6 @@ class Board:
 
         print("            ", end="")
 
-        i = 0
         for i in range(self.__col):
             print(column_horizontal, end=" ")
         print()
@@ -47,10 +52,10 @@ class Board:
         k = 0  # col
         for j in range(self.__rows):
             if j == 3:
-                print("Rows     " + str(j + 1) + row_vertical + " ", end="")
+                print("Rows     " + str(j) + row_vertical + " ", end="")
 
             else:
-                print("         " + str(j + 1) + row_vertical + " ", end="")
+                print("         " + str(j) + row_vertical + " ", end="")
 
             for k in range(self.__col):
                 print(str(self.__gameBoard[j][k]), end=" ")
@@ -62,7 +67,7 @@ class Board:
                 if self.__gameBoard[i][j] == opponent:
                     I = i
                     J = j
-                    if i - 1 >= 0 and self.__gameBoard[i-1][j] == '_' :
+                    if i - 1 >= 0 and self.__gameBoard[i-1][j] == '_':
                         i = i + 1
                         while i < 7 and self.__gameBoard[i][j] == opponent:
                             i += 1
@@ -71,7 +76,7 @@ class Board:
 
                     i = I
                     j = J
-                    if i + 1 <= 7 and self.__gameBoard[i + 1][j] == '_' :
+                    if i + 1 <= 7 and self.__gameBoard[i + 1][j] == '_':
                         i = i - 1
                         while i < 7 and self.__gameBoard[i][j] == opponent:
                             i -= 1
@@ -80,7 +85,7 @@ class Board:
 
                     i = I
                     j = J
-                    if j - 1 >= 0 and self.__gameBoard[i][j-1] == '_' :
+                    if j - 1 >= 0 and self.__gameBoard[i][j-1] == '_':
                         j += 1
                         while j < 7 and self.__gameBoard[i][j] == opponent:
                             j += 1
@@ -98,7 +103,6 @@ class Board:
                     i = I
                     j = J
 
-
     def get_valid_points(self, player, opponent):
         available_points = set()
         self.find_valid_points(player, opponent, available_points)
@@ -111,7 +115,6 @@ class Board:
             y = cell.y
 
             self.__gameBoard[x][y] = '*'
-            self.print_game_board()
         self.print_game_board()
         for cell in available_points:
             x = cell.x
@@ -151,11 +154,14 @@ class Board:
                     self.__black_score += 1
                 else:
                     self.__remaining += 1
+
     def input_move(self, cell, player, opponent):
         i = cell.x
         j = cell.y
         I = i
         J = j
+
+        self.__gameBoard[i][j] = player
 
         # checks left for opponent
         if i -1 >= 0 and self.__gameBoard[i-1][j] == opponent:
@@ -164,7 +170,8 @@ class Board:
                 i -= 1
             if i >= 0 and self.__gameBoard[i][j] == player:
                 while i != I - 1:
-                    self.__gameBoard[++i][j] = player
+                    i += 1
+                    self.__gameBoard[i][j] = player
         # checks right for opponent
         i = I
         j = J
@@ -174,7 +181,8 @@ class Board:
                 i += 1
             if i <= 7 and self.__gameBoard[i][j] == player:
                 while i != I + 1:
-                    self.__gameBoard[--i][j] = player
+                    i -= 1
+                    self.__gameBoard[i][j] = player
         # checks top for opponent
         i = I
         j = J
@@ -184,7 +192,8 @@ class Board:
                 j -= 1
             if j >= 0 and self.__gameBoard[i][j] == player:
                 while j != J - 1:
-                    self.__gameBoard[i][++j] = player
+                    j += 1
+                    self.__gameBoard[i][j] = player
 
         # checks bottom for opponent
         i = I
@@ -195,14 +204,15 @@ class Board:
                 j += 1
             if j >= 7 and self.__gameBoard[i][j] == player:
                 while j != J + 1:
+                    j -= 1
                     self.__gameBoard[i][j] = player
 
+# im using the cantor pairing function to hash
+def hashInteger(self, x, y):
 
+    hashValue = (x + y) * (x + y + 1) / (2 + x)
 
-
-
-
-
+    return hashValue
 
 
 
