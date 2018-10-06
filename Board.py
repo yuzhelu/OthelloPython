@@ -1,5 +1,5 @@
 
-class Cell:
+class Piece:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -72,7 +72,7 @@ class Board:
                         while i < 7 and self.__gameBoard[i][j] == opponent:
                             i += 1
                         if i <= 7 and self.__gameBoard[i][j] == player:
-                            available_points.add(Cell(I -1, J))
+                            available_points.add(Piece(I -1, J))
 
                     i = I
                     j = J
@@ -81,7 +81,7 @@ class Board:
                         while i < 7 and self.__gameBoard[i][j] == opponent:
                             i -= 1
                         if i >= 0 and self.__gameBoard[i][j] == player:
-                            available_points.add(Cell(I + 1, J))
+                            available_points.add(Piece(I + 1, J))
 
                     i = I
                     j = J
@@ -90,7 +90,7 @@ class Board:
                         while j < 7 and self.__gameBoard[i][j] == opponent:
                             j += 1
                         if j <= 7 and self.__gameBoard[i][j] == player:
-                            available_points.add(Cell(I, J - 1))
+                            available_points.add(Piece(I, J - 1))
 
                     i = I
                     j = J
@@ -99,7 +99,7 @@ class Board:
                         while j > 0 and self.__gameBoard[i][j] == opponent:
                             j -= 1
                         if j >= 0 and self.__gameBoard[i][j] == player:
-                            available_points.add(Cell(I, J + 1))
+                            available_points.add(Piece(I, J + 1))
                     i = I
                     j = J
 
@@ -125,9 +125,9 @@ class Board:
         self.update_scores()
 
         if not white_valid_spots and not black_valid_spots or self.__remaining == 0:   # white and avail is empty
-            if white_valid_spots > black_valid_spots:
+            if len(white_valid_spots) > len(black_valid_spots):
                 return 1
-            if black_valid_spots > white_valid_spots:
+            if len(black_valid_spots) > len(white_valid_spots):
                 return -1
             else:
                 return 0
@@ -164,7 +164,7 @@ class Board:
         self.__gameBoard[i][j] = player
 
         # checks left for opponent
-        if i -1 >= 0 and self.__gameBoard[i-1][j] == opponent:
+        if i - 1 >= 0 and self.__gameBoard[i-1][j] == opponent:
             i -= 1
             while i > 0 and self.__gameBoard[i][j] == opponent:
                 i -= 1
